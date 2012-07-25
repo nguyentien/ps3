@@ -24,6 +24,8 @@ CREATE TABLE `device` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `cost` float DEFAULT NULL,
+  `range` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -36,6 +38,7 @@ DROP TABLE IF EXISTS `extra`;
 CREATE TABLE `extra` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
+  `unit` varchar(255) DEFAULT NULL,
   `cost` float DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -51,6 +54,9 @@ CREATE TABLE `payment` (
   `device` int(11) DEFAULT NULL,
   `start` int(11) DEFAULT NULL,
   `stop` int(11) DEFAULT NULL,
+  `surcharge` float DEFAULT NULL,
+  `discount` float DEFAULT NULL,
+  `comments` varchar(255) DEFAULT NULL,
   `date` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -70,6 +76,18 @@ CREATE TABLE `payment_extra` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `payment_extra` */
+
+/*Table structure for table `range` */
+
+DROP TABLE IF EXISTS `range`;
+
+CREATE TABLE `range` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `range` */
 
 /*Table structure for table `system` */
 
