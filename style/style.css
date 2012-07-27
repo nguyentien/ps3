@@ -1,18 +1,30 @@
+/*
+Theme Name: PS3
+Description: PS3
+*/
+
+/*-------------------------------------
+Body style
+--------------------------------------*/
+* {
+	margin: 0;
+	padding: 0;
+};
+
+body {
+	color: red;
+	font-family: Arial, Helvetical, San-serif;
+	font-size: 12px;
+};
+
+/*-------------------------------------
+Layout structure
+---------------------------------------*/
 #wrapper {
-	font-family: Arial, Sans serif;
-	font-size: 16px;
 	width: 960px;
 	margin: 0 auto;
 }
 
-.range h3 {
-	
-};
-
-.range ul {
-	
-};
-
-.range li {
-	
+.range {
+	border: 1px solid red;
 };
