@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="style/reset.css" type="text/css" rel="stylesheet">
 <link href="style/style.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" src="js/script.js"></script>
 <title>PS3</title>
