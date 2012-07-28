@@ -27,9 +27,11 @@ CREATE TABLE `device` (
   `cost` float DEFAULT NULL,
   `range` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `device` */
+
+insert  into `device`(`id`,`uid`,`name`,`cost`,`range`) values (3,'asdf','asdf',0,0),(4,'asdf','asdf',0,0);
 
 /*Table structure for table `extra` */
 
@@ -41,9 +43,11 @@ CREATE TABLE `extra` (
   `unit` varchar(255) DEFAULT NULL,
   `cost` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 /*Data for the table `extra` */
+
+insert  into `extra`(`id`,`name`,`unit`,`cost`) values (12,'cafe den da','ly',10000),(13,'cafe sua da','ly',15000);
 
 /*Table structure for table `payment` */
 
@@ -77,17 +81,19 @@ CREATE TABLE `payment_extra` (
 
 /*Data for the table `payment_extra` */
 
-/*Table structure for table `range` */
+/*Table structure for table `range_of` */
 
-DROP TABLE IF EXISTS `range`;
+DROP TABLE IF EXISTS `range_of`;
 
-CREATE TABLE `range` (
+CREATE TABLE `range_of` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
-/*Data for the table `range` */
+/*Data for the table `range_of` */
+
+insert  into `range_of`(`id`,`name`) values (1,'sadfa'),(2,'asd'),(3,'asdf');
 
 /*Table structure for table `system` */
 
@@ -100,6 +106,8 @@ CREATE TABLE `system` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `system` */
+
+insert  into `system`(`var`,`val`) values ('default_cost','7500');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
