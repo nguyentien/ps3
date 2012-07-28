@@ -9,22 +9,99 @@ Body style
 * {
 	margin: 0;
 	padding: 0;
-};
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus {
+	outline:none;
+}
+
+.selected {
+	text-decoration: underline;
+}
 
 body {
-	color: red;
-	font-family: Arial, Helvetical, San-serif;
-	font-size: 12px;
-};
+	font-family: Arial, San-serif;
+	font-size: 14px;
+}
+
+.clear {
+	clear: both;
+}
 
 /*-------------------------------------
-Layout structure
----------------------------------------*/
+Main layout 
+--------------------------------------*/
 #wrapper {
 	width: 960px;
 	margin: 0 auto;
 }
 
+#header {
+	font-size: 18px;
+	text-align: center;
+}
+
+#menu {
+	font-size: 18px;
+}
+
+#menu ul {
+	list-style: none;
+}
+
+#menu ul li {
+	float: right;
+	margin: 0 10px;
+}
+
+#system {
+	
+}
+
+#system ul {
+	list-style: none;
+}
+
+#system ul li {
+	float: left;
+	margin: 0 10px;
+}
+
+#footer {
+	font-size: 18px;
+	text-align: center;
+}
+
 .range {
-	border: 1px solid red;
-};
+	float: left;
+	margin: 0 10px;
+}
+
+.range ul {
+	list-style: none;
+}
+
+.range li {
+	margin: 10px 0;
+	border: 2px solid red;
+	border-radius: 5px;
+}
+
+.range li .name{
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.range a {
+	display: block;
+	width: 100px;
+}

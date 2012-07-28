@@ -4,12 +4,15 @@
 <ul>
 <li>
 <a href="#"><img src="{$baseUrl}/images/ps3.jpg" alt="PS3" height="100" width="100"></a>
+<a href="#" class="name">asdasdfs</a>
 </li>
 <li>
 <a href="#"><img src="{$baseUrl}/images/ps3.jpg" alt="PS3" height="100" width="100"></a>
+<a href="#" class="name">asdasdfs</a>
 </li>
 <li>
 <a href="#"><img src="{$baseUrl}/images/ps3.jpg" alt="PS3" height="100" width="100"></a>
+<a href="#" class="name">asdasdfs</a>
 </li>
 </ul>
 </div>

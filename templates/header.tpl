@@ -3,9 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="style/style.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
 <title>PS3</title>
 </head>
 <body>
 <!-- Wrapper -->
 <div id="wrapper">
+<div id="header">Header</div>
+<div id="menu">{include file = "mainmenu.tpl"}</div>

@@ -1,6 +1,7 @@
 <?php
 
 include_once 'include/config.php';
+include_once 'include/connect.php';
 
 $root	= dirname(__FILE__);
 $url	= parse_url($_SERVER['REQUEST_URI']);
