@@ -21,6 +21,7 @@ function save() {
 		success: function(result) {
 			if (result) {
 				alert('Cập nhật thành công!');
+				loadContent(3);
 			}
 		}
 	});

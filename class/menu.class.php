@@ -101,4 +101,71 @@ class Menu {
 		
 		return $result;
 	}
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param Menu $menu
+	 */
+	public static function save(Menu $menu) {
+		$dbh = $GLOBALS['dbh'];
+		if ($menu->get_id()) {
+			// Update
+			$data = $dbh->prepare("
+				UPDATE 
+					extra
+				SET 
+					name=:name, unit=:unit, cost=:cost 
+				WHERE 
+					id=:id
+			");
+			$data->execute(array(
+				':name' => $menu->get_name(),
+				':unit' => $menu->get_unit(),
+				':cost' => $menu->get_cost(),
+				':id'   => $menu->get_id()
+			));
+		} else {
+			// Insert
+			$data = $dbh->prepare("
+				INSERT 
+					INTO extra (name, unit, cost)
+				VALUES
+					(:name, :unit, :cost);
+			");
+			$data->execute(array(
+				':name' => $menu->get_name(),
+				':unit' => $menu->get_unit(),
+				':cost' => $menu->get_cost()
+			));
+		}
+		if ($data->rowCount()) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param int $id
+	 */
+	public static function delete($id) {
+		$dbh = $GLOBALS['dbh'];
+		
+		$data = $dbh->prepare("
+			DELETE
+			FROM 
+				extra
+			WHERE 
+				id = :id
+		");
+		$data->execute(array(
+			':id' => $id
+		));
+		if ($data->rowCount()) {
+			return true;
+		}
+		return false;
+	}
 }
