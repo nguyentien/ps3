@@ -1,53 +1,66 @@
 {include file="header.tpl"}
-{if $status}
-<a href="">Bắt đầu</a>
-{else}
+
+<!-- Payment -->
+<div id="payment" class="float">
+{include file="payment.tpl"}
+</div>
+<!-- End Payment -->
+
+<!-- Menu -->
+<div id="payment_extra" class="float">
+{include file="payment_extra.tpl"}
+</div>
+<!-- End Menu -->
+
+<!-- List menu -->
+<div id="list_menu">
 <table>
 <tr>
-<td colspan="4">
-	<span>Tổng các lần trước</span>
-	<input type="text">
-	<a href="">Chi tiết</a>
+<td></td>
+<th>Tên thực đơn</th>
+<th>Đơn vị tính</th>
+<th>Đơn giá</th>
+</tr>
+{section name=m loop=$menus}
+<tr>
+<td>
+<input type="checkbox" name="menu_id" value="{$menus[m]->get_id()}">
 </td>
+<td>{$menus[m]->get_name()}</td>
+<td>{$menus[m]->get_unit()}</td>
+<td>{$menus[m]->get_cost()|number_format:0:",":","}</td>
 </tr>
-<tr>
-<td>Bắt đầu</td>
-<td><input type="text"></td>
-<td>Kết thúc</td>
-<td><input type="text"></td>
-</tr>
-<tr>
-<td>Tiền giờ</td>
-<td><input type="text"></td>
-<td>Phụ thu</td>
-<td><input type="text"></td>
-</tr>
-<tr>
-<td>Tổng tiền</td>
-<td><input type="text"></td>
-<td>Giảm giá</td>
-<td><input type="text"></td>
-</tr>
-<tr>
-<td>Phải trả</td>
-<td><input type="text"></td>
-<td>Ghi chú</td>
-<td><input type="text"></td>
-</tr>
-<tr>
-<td colspan="4">
-	<a href="">Lưu lượt này, Tạo lượt mới</a>
-	<a href="">In phiếu</a>
-</td>
-</tr>
-<tr>
-<td colspan="4">
-	<a href="">Chuyển máy</a>
-	<a href="">Trả máy</a>
-	<a href="">Thu tiền</a>
-</td>
-</tr>
+{/section}
 </table>
+</div>
+<!-- End list menu -->
 
-{/if}
+<script type="text/javascript">
+jQuery(document).ready(function() {
+	jQuery('#list_menu').dialog({
+		autoOpen: false,
+		modal: true,
+		width: 400,
+		title: 'Danh sách thực đơn',
+		resizable: false,
+		buttons: {
+			'Thêm': function () {
+				var	arr = new Array();
+				jQuery('#list_menu :checked').each(function() {
+					arr.push(jQuery(this).val());
+				});
+				jQuery('#payment_extra').load(
+					'detail',
+					'menu_add=1&menu_id=' + arr.toString()
+				);
+				jQuery('#list_menu').dialog('close');
+			},
+			'Huỷ bỏ': function () {
+				jQuery('#list_menu').dialog('close');
+			}
+		}
+	});
+});
+</script>
+
 {include file="footer.tpl"}

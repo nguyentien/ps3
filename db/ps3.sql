@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v9.50 
-MySQL - 5.5.24-log : Database - ps3
+MySQL - 5.5.16 : Database - ps3
 *********************************************************************
 */
 
@@ -62,6 +62,7 @@ CREATE TABLE `payment` (
   `surcharge` float DEFAULT NULL,
   `discount` float DEFAULT NULL,
   `comments` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
   `date` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -73,11 +74,11 @@ CREATE TABLE `payment` (
 DROP TABLE IF EXISTS `payment_extra`;
 
 CREATE TABLE `payment_extra` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `extra` int(11) DEFAULT NULL,
-  `number_of` int(11) DEFAULT NULL,
+  `payment` int(11) NOT NULL,
+  `extra` int(11) NOT NULL,
+  `number` int(11) DEFAULT NULL,
   `date` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`payment`,`extra`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `payment_extra` */

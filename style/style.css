@@ -51,6 +51,11 @@ body {
 	visibility: hidden;
 }
 
+.float {
+	float: left;
+	margin: 0px 10px;
+}
+
 /*-------------------------------------
 Main layout 
 --------------------------------------*/

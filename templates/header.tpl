@@ -3,7 +3,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="style/style.css" type="text/css" rel="stylesheet">
+<link href="style/jquery-ui-1.8.22.custom.min.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.22.custom.min.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
 <title>PS3</title>
 </head>
