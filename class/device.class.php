@@ -205,20 +205,22 @@ class Device {
 	 * Enter description here ...
 	 * @param int $id
 	 */
-	public static function getStatus($id) {
+	public static function getDeviceById($id) {
 		$dbh = $GLOBALS['dbh'];
-		$result = 0;
+		
+		$result = array();
 		$sql = "
 			SELECT 
-				`status` 
+				`cost`, `status`
 			FROM 
 				`device` 
 			WHERE 
 				id=$id
 		";
 		foreach ($dbh->query($sql) as $r) {
+			$result['cost'] = $r['cost'];
 			if ($r['status'] == 1) {
-				$result = 1;
+				$result['status'] = 1;
 			}
 		}
 		return $result;
