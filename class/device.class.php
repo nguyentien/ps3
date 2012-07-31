@@ -110,34 +110,117 @@ class Device {
 		$rows = array();
 		$sql = "
 			SELECT 
-				* 
+				D.*,
+				R.name as range_name
 			FROM 
-				device
+				device D
+			LEFT JOIN `range` R ON D.range=R.id
 		";
 		foreach ($dbh->query($sql) as $row) {
-			$device = new Device();
-			$device->set_id($row['id']);
-			$device->set_uid($row['uid']);
-			$device->set_name($row['name']);
-			$device->set_cost($row['cost']);
-			$device->set_range($row['range']);
-			$rows[] = $device;
+			$count = count($rows);
+			$rows[$count]['id']			= $row['id'];
+			$rows[$count]['uid']		= $row['uid'];
+			$rows[$count]['name']		= $row['name'];
+			$rows[$count]['cost']		= $row['cost'];
+			$rows[$count]['range_id']	= $row['range'];
+			$rows[$count]['range_name']	= $row['range_name'];
 		}
 		
 		return $rows;
 	}
+	
 	/**
 	 * 
 	 * Enter description here ...
+	 * @param Device $d
 	 */
-	public static function insert() {
-		$data = $dbh->prepare("INSERT INTO device VALUES(:id, :uid, :name, :cost, :range)");
+	public static function save(Device $d) {
+		$dbh = $GLOBALS['dbh'];
+		
+		if ($d->get_id()) {
+			// Update
+			$data = $dbh->prepare("
+				UPDATE 
+					device
+				SET 
+					uid=:uid, name=:name, cost=:cost, `range`=:range 
+				WHERE 
+					id=:id
+			");
+			$data->execute(array(
+				':uid'   => $d->get_uid(),
+				':name'  => $d->get_name(),
+				':cost'  => $d->get_cost(),
+				':range' => $d->get_range(),
+				':id'    => $d->get_id()
+			));
+			return true;
+		} else {
+			// Insert
+			$data = $dbh->prepare("
+				INSERT 
+					INTO device (uid, name, cost, `range`)
+				VALUES
+					(:uid, :name, :cost, :range)
+			");
+			$data->execute(array(
+				':uid' => $d->get_uid(),
+				':name' => $d->get_name(),
+				':cost' => $d->get_cost(),
+				':range' => $d->get_range()
+			));
+			if ($data->rowCount()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param unknown_type $id
+	 */
+	public static function delete($id) {
+		$dbh = $GLOBALS['dbh'];
+		
+		$data = $dbh->prepare("
+			DELETE
+			FROM 
+				device
+			WHERE 
+				id = :id
+		");
 		$data->execute(array(
-			':id'   => $this->id,
-			':uid' => $this->uid,
-			':name' => $this->name,
-			':cost' => $this->cost,
-			':range' => $this->range
+			':id' => $id
 		));
+		if ($data->rowCount()) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param int $id
+	 */
+	public static function getStatus($id) {
+		$dbh = $GLOBALS['dbh'];
+		$result = 0;
+		$sql = "
+			SELECT 
+				`status` 
+			FROM 
+				`device` 
+			WHERE 
+				id=$id
+		";
+		foreach ($dbh->query($sql) as $r) {
+			if ($r['status'] == 1) {
+				$result = 1;
+			}
+		}
+		return $result;
 	}
 }

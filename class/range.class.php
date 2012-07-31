@@ -51,7 +51,7 @@ class Range {
 			SELECT
 				* 
 			FROM 
-				range_of
+				`range`
 		";
 		foreach ($dbh->query($sql) as $r) {
 			$range = new Range();
@@ -61,5 +61,70 @@ class Range {
 		}
 		
 		return $result;
+	}
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param $r
+	 */
+	public static function save(Range $r) {
+		$dbh = $GLOBALS['dbh'];
+		
+		if ($r->get_id()) {
+			// Update
+			$data = $dbh->prepare("
+				UPDATE 
+					`range`
+				SET 
+					name=:name
+				WHERE 
+					id=:id
+			");
+			$data->execute(array(
+				':name'  => $r->get_name(),
+				':id'    => $r->get_id()
+			));
+			return true;
+		} else {
+			// Insert
+			$data = $dbh->prepare("
+				INSERT 
+					INTO `range` (name)
+				VALUES
+					(:name)
+			");
+			$data->execute(array(
+				':name' => $r->get_name(),
+			));
+			if ($data->rowCount()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param unknown_type $id
+	 */
+	public static function delete($id) {
+		$dbh = $GLOBALS['dbh'];
+		
+		$data = $dbh->prepare("
+			DELETE
+			FROM 
+				`range`
+			WHERE 
+				id = :id
+		");
+		$data->execute(array(
+			':id' => $id
+		));
+		if ($data->rowCount()) {
+			return true;
+		}
+		return false;
 	}
 }

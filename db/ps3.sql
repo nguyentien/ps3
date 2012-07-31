@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v9.50 
-MySQL - 5.5.16 : Database - ps3
+MySQL - 5.5.24-log : Database - ps3
 *********************************************************************
 */
 
@@ -26,12 +26,13 @@ CREATE TABLE `device` (
   `name` varchar(255) DEFAULT NULL,
   `cost` float DEFAULT NULL,
   `range` int(11) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
 
 /*Data for the table `device` */
 
-insert  into `device`(`id`,`uid`,`name`,`cost`,`range`) values (3,'asdf','asdf',0,0),(4,'asdf','asdf',0,0);
+insert  into `device`(`id`,`uid`,`name`,`cost`,`range`,`status`) values (8,'sdkgs','kkasdfk',224,12,NULL),(9,'452','ps3',22222,12,NULL),(23,'jii','jkk',65,12,NULL),(24,'wert','wert',0,12,NULL),(25,'adf','adfadf',7533,11,NULL),(26,'46345','356',3456,11,NULL),(27,'356','3563',7533,11,NULL),(28,'456','4564',8000,11,NULL),(31,'sdg','may 1',8000,11,NULL);
 
 /*Table structure for table `extra` */
 
@@ -43,11 +44,11 @@ CREATE TABLE `extra` (
   `unit` varchar(255) DEFAULT NULL,
   `cost` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 /*Data for the table `extra` */
 
-insert  into `extra`(`id`,`name`,`unit`,`cost`) values (12,'cafe den da','ly',10000),(13,'cafe sua da','ly',15000);
+insert  into `extra`(`id`,`name`,`unit`,`cost`) values (12,'cafe den da','ly',19000),(13,'cafe sua da ddfg','ly',16000),(14,'hfgh','gsdfsdf',18000),(15,'com ga','44',4447);
 
 /*Table structure for table `payment` */
 
@@ -81,19 +82,19 @@ CREATE TABLE `payment_extra` (
 
 /*Data for the table `payment_extra` */
 
-/*Table structure for table `range_of` */
+/*Table structure for table `range` */
 
-DROP TABLE IF EXISTS `range_of`;
+DROP TABLE IF EXISTS `range`;
 
-CREATE TABLE `range_of` (
+CREATE TABLE `range` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
-/*Data for the table `range_of` */
+/*Data for the table `range` */
 
-insert  into `range_of`(`id`,`name`) values (1,'sadfa'),(2,'asd'),(3,'asdf');
+insert  into `range`(`id`,`name`) values (11,'Day 1'),(12,'Day 2'),(13,'Day 3'),(14,'Day 4'),(16,'adf');
 
 /*Table structure for table `system` */
 
@@ -107,7 +108,7 @@ CREATE TABLE `system` (
 
 /*Data for the table `system` */
 
-insert  into `system`(`var`,`val`) values ('default_cost','7500');
+insert  into `system`(`var`,`val`) values ('default_cost','345'),('default_unit','1');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

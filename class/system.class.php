@@ -83,12 +83,10 @@ class System {
 		";
 		$data = $dbh->prepare($sql);
 		foreach ($value as $key => $v) {
-			if ($key == 'default_cost') {
-				$data->execute(array(
-					':val' => $v,
-					':var' => 'default_cost'
-				));
-			}
+			$data->execute(array(
+				':val' => $v,
+				':var' => $key
+			));
 		}
 		if ($data->rowCount()) {
 			return true;

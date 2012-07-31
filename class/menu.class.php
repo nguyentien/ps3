@@ -125,21 +125,20 @@ class Menu {
 				':cost' => $menu->get_cost(),
 				':id'   => $menu->get_id()
 			));
+			return true;
 		} else {
 			// Insert
 			$data = $dbh->prepare("
 				INSERT 
 					INTO extra (name, unit, cost)
 				VALUES
-					(:name, :unit, :cost);
+					(:name, :unit, :cost)
 			");
 			$data->execute(array(
 				':name' => $menu->get_name(),
 				':unit' => $menu->get_unit(),
 				':cost' => $menu->get_cost()
 			));
-		}
-		if ($data->rowCount()) {
 			return true;
 		}
 		return false;

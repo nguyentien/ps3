@@ -3,7 +3,7 @@
 include_once 'class/menu.class.php';
 
 // Insert
-if ($_POST['insert']) {
+if (isset($_POST['insert'])) {
 	$menu = new Menu();
 	$menu->set_name((string) $_POST['name']);
 	$menu->set_unit((string) $_POST['unit']);
@@ -15,7 +15,7 @@ if ($_POST['insert']) {
 }
 
 // Update
-if ($_POST['update']) {
+if (isset($_POST['update'])) {
 	$menu = new Menu();
 	$menu->set_id((int) $_POST['id']);
 	$menu->set_name((string) $_POST['name']);
@@ -29,7 +29,7 @@ if ($_POST['update']) {
 }
 
 // Delete
-if ($_POST['delete']) {
+if (isset($_POST['delete'])) {
 	if (Menu::delete((int) $_POST['id'])) {
 		die('1');
 	}

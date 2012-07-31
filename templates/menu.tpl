@@ -12,7 +12,7 @@
 <td>{$smarty.section.m.index + 1}</td>
 <td>{$menus[m]->get_name()}</td>
 <td>{$menus[m]->get_unit()}</td>
-<td>{$menus[m]->get_cost()}</td>
+<td>{$menus[m]->get_cost()|number_format:0:",":","}</td>
 <td>
 	<a href="javascript: menu_update_layout({$menus[m]->get_id()}, '{$menus[m]->get_name()}', '{$menus[m]->get_unit()}', {$menus[m]->get_cost()})">Sửa</a>
 	<a href="javascript: menu_delete({$menus[m]->get_id()})">Xoá</a></td>
@@ -20,6 +20,7 @@
 {/section}
 </table>
 {/if}
+<form id="form1" action="" method="post">
 <table>
 <tr>
 <td>Tên thực đơn:</td>
@@ -43,7 +44,18 @@
 <!-- Hidden -->
 <input type="hidden" name="id" id="id">
 <!-- End -->
+<input class="submit" type="submit">
+</form>
 <script type="text/javascript">
+jQuery('#form1').submit(function() {
+	if (jQuery('#id').val()) {
+		menu_update();
+	} else {
+		menu_save();
+	}
+	return false;
+});
+
 /**
  * Save
  */
@@ -79,13 +91,16 @@ function menu_update_layout(id, name, unit, cost) {
  * Update
  */
 function menu_update() {
+	if (!jQuery('#name').val() || !jQuery('#unit').val() || !jQuery('#cost').val()) {
+		alert('Vui lòng nhập đầy đủ thông tin!');
+		return false;
+	}
 	jQuery.ajax({
 		url: 'menu',
 		data: 'update=1&id=' + jQuery('#id').val() + '&name=' + jQuery('#name').val() + '&unit=' + jQuery('#unit').val() + '&cost=' + jQuery('#cost').val(),
 		type: 'POST',
 		success: function(result) {
 			if (result) {
-				alert('Cập nhật thành công!');
 				loadContent(2);
 			}
 		}
