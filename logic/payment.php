@@ -75,9 +75,46 @@ if (!empty($_GET['pay'])) {
 	$d = Device::getById($device_id);
 	$d->set_status(0);
 	Device::save($d);
+	exit();
+}
+
+if (!empty($_GET['saew'])) {
+	// Update status for payment
+	$p = Payment::getById($payment_id);
+	$p->set_status(0);
+	Payment::save($p);
 	
-	// Update $payment_id
-	$payment_id = 0;
+	// New payment
+	$p = new Payment();
+	$p->set_device($device_id);
+	$p->set_start(strtotime('now'));
+	$p->set_stop(0);
+	$p->set_surcharge(0);
+	$p->set_discount(0);
+	$p->set_comment('');
+	$p->set_status(1);
+	$p->set_date(strtotime('now'));
+	$payment_id = Payment::save($p);
+	exit();
+}
+
+if (!empty($_GET['switch'])) {
+	// Update status of old device
+	$d = Device::getById($device_id);
+	$d->set_status(0);
+	Device::save($d);
+	
+	// Update status of new device
+	$device_id = (int) $_GET['new_device_id'];
+	$d = Device::getById($device_id);
+	$d->set_status(1);
+	Device::save($d);
+	
+	$p = Payment::getById($payment_id);
+	$p->set_device($device_id);
+	Payment::save($p);
+	echo $device_id;
+	exit();
 }
 
 $smarty->assign('start', $start);

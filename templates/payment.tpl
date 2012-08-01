@@ -18,11 +18,11 @@
 <td>Kết thúc</td>
 <td>
 {if $stop}
-<input type="text" disabled="disabled" value="{$payment->get_stop()|date_format:'%H:%M:%S'}">
+<input id="stop" type="text" disabled="disabled" value="{$payment->get_stop()|date_format:'%H:%M:%S'}">
 {elseif $start}
 <a href="" id="end">Kết thúc</a>
 {else}
-<input type="text" disabled="disabled">
+<input id="stop" type="text" disabled="disabled">
 {/if}
 </td>
 </tr>
@@ -46,13 +46,13 @@
 </tr>
 <tr>
 <td colspan="4">
-	<a href="">Lưu lượt này, Tạo lượt mới</a>
+	<a href="" id="save_new">Lưu lượt này, Tạo lượt mới</a>
 	<a href="">In phiếu</a>
 </td>
 </tr>
 <tr>
 <td colspan="4">
-	<a href="">Chuyển máy</a>
+	<a href="" id="switch">Chuyển máy</a>
 	<a href="" id="pay_machine">Trả máy</a>
 	<a href="" id="cash">Thu tiền</a>
 </td>
@@ -78,6 +78,12 @@ jQuery('#end').click(function() {
 });
 
 jQuery('#cash').click(function() {
+	if (!jQuery('#payment_id').val()) {
+		return false;
+	}
+	if (!jQuery('#stop').val()) {
+		return false;
+	}
 	jQuery('#payment').load(
 		'payment',
 		'device_id={$device->get_id()}' +
@@ -91,17 +97,75 @@ jQuery('#cash').click(function() {
 });
 
 jQuery('#pay_machine').click(function() {
-	jQuery('#payment').load(
-		'payment',
-		'device_id={$device->get_id()}' +
-		'&payment_id=' + jQuery('#payment_id').val() +
-		'&pay=1',
-		function(response,status,xhr) {
-			if (status == 'success') {
-				location.reload();
+	if (!jQuery('#payment_id').val()) {
+		return false;
+	}
+	if (jQuery('#stop').val()) {
+		jQuery('#payment').load(
+			'payment',
+			'device_id={$device->get_id()}' +
+			'&payment_id=' + jQuery('#payment_id').val() +
+			'&pay=1',
+			function(response,status,xhr) {
+				if (status == 'success') {
+					location.reload();
+				}
 			}
+		);
+	} else {
+		if (confirm('Bạn có chắc làm điều này, hoá đơn này hiện tại chưa tính tiền!')) {
+			jQuery('#payment').load(
+				'payment',
+				'device_id={$device->get_id()}' +
+				'&payment_id=' + jQuery('#payment_id').val() +
+				'&pay=1',
+				function(response,status,xhr) {
+					if (status == 'success') {
+						location.reload();
+					}
+				}
+			);
 		}
-	);
+	}
+	return false;
+});
+
+jQuery('#save_new').click(function() {
+	if (!jQuery('#payment_id').val()) {
+		return false;
+	}
+	if (jQuery('#stop').val()) {
+		jQuery('#payment').load(
+			'payment',
+			'device_id={$device->get_id()}' +
+			'&payment_id=' + jQuery('#payment_id').val() +
+			'&saew=1',
+			function(response,status,xhr) {
+				if (status == 'success') {
+					location.reload();
+				}
+			}
+		);
+	} else {
+		if (confirm('Bạn có chắc làm điều này, hoá đơn này hiện tại chưa tính tiền!')) {
+			jQuery('#payment').load(
+				'payment',
+				'device_id={$device->get_id()}' +
+				'&payment_id=' + jQuery('#payment_id').val() +
+				'&saew=1',
+				function(response,status,xhr) {
+					if (status == 'success') {
+						location.reload();
+					}
+				}
+			);
+		}
+	}
+	return false;
+});
+
+jQuery('#switch').click(function() {
+	jQuery('#list_device').dialog('open');
 	return false;
 });
 </script>

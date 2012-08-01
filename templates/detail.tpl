@@ -38,6 +38,22 @@
 </div>
 <!-- End list menu -->
 
+<!-- List device -->
+<div id="list_device">
+<table>
+<tr>
+<td>Chọn máy: </td>
+<td>
+<select id="device_id">
+{section name=d loop=$list_device}
+<option value="{$list_device[d]['id']}">{$list_device[d]['name']}</option>
+{/section}
+</select>
+</td>
+</tr>
+</table>
+</div>
+<!-- End list device -->
 <script type="text/javascript">
 jQuery(document).ready(function() {
 	jQuery('#list_menu').dialog({
@@ -73,6 +89,34 @@ jQuery(document).ready(function() {
 					jQuery('#number_' + jQuery(this).val()).addClass('hidden');
 				});
 				jQuery('#list_menu').dialog('close');
+			}
+		}
+	});
+	
+	jQuery('#list_device').dialog({
+		autoOpen: false,
+		modal: true,
+		title: 'Danh sách máy',
+		width: 300,
+		resizable: false,
+		buttons: {
+			'Đồng ý': function () {
+				if (jQuery('#payment_id').val()) {
+					jQuery.ajax({
+						url: 'payment',
+						data: 'device_id={$device->get_id()}' +
+								'&payment_id=' + jQuery('#payment_id').val() +
+								'&new_device_id=' + jQuery('#device_id').val() +
+								'&switch=1',
+						success: function(result) {
+							location = '/detail?id=' + result
+						}
+					});
+				}
+				jQuery('#list_device').dialog('close');
+			},
+			'Huỷ bỏ': function () {
+				jQuery('#list_device').dialog('close');
 			}
 		}
 	});

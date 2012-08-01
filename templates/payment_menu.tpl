@@ -23,7 +23,9 @@
 </table>
 <script type="text/javascript">
 jQuery('#menu_add').click(function() {
-	jQuery('#list_menu').dialog('open');
+	if (jQuery('#payment_id').val()) {
+		jQuery('#list_menu').dialog('open');
+	}
 	return false;
 });
 

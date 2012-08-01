@@ -34,9 +34,13 @@ if ($payment) {
 // List menu
 $list_menu = Menu::getAll();
 
+// List device for switch device
+$list_device = Device::getAll();
+
 $smarty->assign('start', $start);
 $smarty->assign('stop', $stop);
 $smarty->assign('device', $device);
+$smarty->assign('list_device', $list_device);
 $smarty->assign('list_menu', $list_menu);
 $smarty->assign('menu', 1);
 
