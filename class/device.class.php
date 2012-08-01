@@ -7,7 +7,7 @@ class Device {
 	private $name;
 	private $cost;
 	private $range;
-	
+	private $status;
 	/**
 	 * 
 	 * Enter description here ...
@@ -101,6 +101,23 @@ class Device {
 	/**
 	 * 
 	 * Enter description here ...
+	 * @param unknown_type $status
+	 */
+	public function set_status($status) {
+		$this->status = $status;
+	}
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 */
+	public function get_status() {
+		return $this->status;
+	}
+	
+	/**
+	 * 
+	 * Enter description here ...
 	 * @return multitype:Device
 	 */
 	public static function getAll() {
@@ -124,6 +141,7 @@ class Device {
 			$rows[$count]['cost']		= $row['cost'];
 			$rows[$count]['range_id']	= $row['range'];
 			$rows[$count]['range_name']	= $row['range_name'];
+			$rows[$count]['status']		= $row['status'];
 		}
 		
 		return $rows;
@@ -143,18 +161,18 @@ class Device {
 				UPDATE 
 					device
 				SET 
-					uid=:uid, name=:name, cost=:cost, `range`=:range 
+					uid=:uid, name=:name, cost=:cost, `range`=:range, `status`=:status
 				WHERE 
 					id=:id
 			");
 			$data->execute(array(
-				':uid'   => $d->get_uid(),
-				':name'  => $d->get_name(),
-				':cost'  => $d->get_cost(),
-				':range' => $d->get_range(),
-				':id'    => $d->get_id()
+				':uid'		=> $d->get_uid(),
+				':name'		=> $d->get_name(),
+				':cost'		=> $d->get_cost(),
+				':range'	=> $d->get_range(),
+				':status'	=> $d->get_status(),
+				':id'		=> $d->get_id()
 			));
-			return true;
 		} else {
 			// Insert
 			$data = $dbh->prepare("
@@ -169,11 +187,7 @@ class Device {
 				':cost' => $d->get_cost(),
 				':range' => $d->get_range()
 			));
-			if ($data->rowCount()) {
-				return true;
-			}
 		}
-		return false;
 	}
 	
 	/**
@@ -194,10 +208,6 @@ class Device {
 		$data->execute(array(
 			':id' => $id
 		));
-		if ($data->rowCount()) {
-			return true;
-		}
-		return false;
 	}
 	
 	/**
@@ -205,26 +215,26 @@ class Device {
 	 * Enter description here ...
 	 * @param int $id
 	 */
-	public static function getDeviceById($id) {
+	public static function getById($id) {
 		$dbh = $GLOBALS['dbh'];
 		
-		$result = array();
 		$sql = "
 			SELECT 
-				`cost`, `status`
+				*
 			FROM 
-				`device` 
+				device
 			WHERE 
 				id=$id
 		";
 		foreach ($dbh->query($sql) as $r) {
-			$result['cost'] = $r['cost'];
-			if ($r['status'] == 1) {
-				$result['status'] = 1;
-			} else {
-				$result['status'] = 0;
-			}
+			$d = new Device();
+			$d->set_id($id);
+			$d->set_name($r['name']);
+			$d->set_uid($r['uid']);
+			$d->set_cost($r['cost']);
+			$d->set_range($r['range']);
+			$d->set_status($r['status']);
 		}
-		return $result;
+		return $d;
 	}
 }

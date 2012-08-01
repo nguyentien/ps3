@@ -87,7 +87,7 @@ class Menu {
 			SELECT
 				*
 			FROM
-				extra
+				menu
 		";
 		foreach ($dbh->query($sql) as $r) {
 			$menu = new Menu();
@@ -113,7 +113,7 @@ class Menu {
 			// Update
 			$data = $dbh->prepare("
 				UPDATE 
-					extra
+					menu
 				SET 
 					name=:name, unit=:unit, cost=:cost 
 				WHERE 
@@ -125,12 +125,11 @@ class Menu {
 				':cost' => $menu->get_cost(),
 				':id'   => $menu->get_id()
 			));
-			return true;
 		} else {
 			// Insert
 			$data = $dbh->prepare("
 				INSERT 
-					INTO extra (name, unit, cost)
+					INTO `menu`(name, unit, cost)
 				VALUES
 					(:name, :unit, :cost)
 			");
@@ -139,9 +138,7 @@ class Menu {
 				':unit' => $menu->get_unit(),
 				':cost' => $menu->get_cost()
 			));
-			return true;
 		}
-		return false;
 	}
 	
 	/**
@@ -155,16 +152,12 @@ class Menu {
 		$data = $dbh->prepare("
 			DELETE
 			FROM 
-				extra
+				menu
 			WHERE 
 				id = :id
 		");
 		$data->execute(array(
 			':id' => $id
 		));
-		if ($data->rowCount()) {
-			return true;
-		}
-		return false;
 	}
 }

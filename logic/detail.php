@@ -2,30 +2,42 @@
 
 include_once 'class/device.class.php';
 include_once 'class/menu.class.php';
-include_once 'class/payment_extra.class.php';
+include_once 'class/payment.class.php';
+include_once 'class/payment_menu.class.php';
 
-$id = (int) $_GET['id'];
-$payment = 1;
+$device_id	= (int) $_GET['id'];
+$start		= 0;
+$stop		= 0;
 
-// Get device by id
-$device = Device::getDeviceById($id);
+// Get device by id for get cost only
+$device = Device::getById($device_id);
 
-// Assign status
-$start = $device['status'] ? 1 : 0;
-$end   = $device['status'] ? 0 : 1;
+// Get payment of device
+$payment = Payment::getByDevice($device_id);
 
-// Get list extra
-$payment_extra = Payment_Extra::getById($payment);
+if ($payment) {
+	if ($payment->get_start()) {
+		$start = 1;
+	}
+	
+	if ($payment->get_stop()) {
+		$stop = 1;
+	}
+	
+	// Assign list menu in payment
+	$smarty->assign('list_payment_menu', Payment_Menu::getByPayment($payment->get_id()));
+	
+	// Assign payment
+	$smarty->assign('payment', $payment);
+}
 
 // List menu
-$menus = Menu::getAll();
+$list_menu = Menu::getAll();
 
-$smarty->assign('id', $id);
-$smarty->assign('menus', $menus);
-$smarty->assign('cost', $device['cost']);
 $smarty->assign('start', $start);
-$smarty->assign('end', $end);
-$smarty->assign('payment_extra', $payment_extra);
+$smarty->assign('stop', $stop);
+$smarty->assign('device', $device);
+$smarty->assign('list_menu', $list_menu);
 $smarty->assign('menu', 1);
 
 $smarty->display('detail.tpl');

@@ -6,10 +6,16 @@
 {section name=d loop=$devices}
 {if $devices[d]['range_id'] eq $ranges[r]->get_id()}
 	<li>
-		<a href="detail?id={$devices[d]['id']}"><img src="{$baseUrl}/images/ps3.jpg" alt="PS3" height="100" width="100"></a>
+		<a href="detail?id={$devices[d]['id']}">
+{if $devices[d]['status']}
+			<img src="{$baseUrl}/images/ps4.jpg" alt="PS3" height="100" width="100">
+{else}
+			<img src="{$baseUrl}/images/ps3.jpg" alt="PS3" height="100" width="100">
+{/if}
+		</a>
 		<a href="detail?id={$devices[d]['id']}" class="name">{$devices[d]['name']}</a>
 	</li>
-{/if}	
+{/if}
 {/section}
 	</ul>
 	</div>

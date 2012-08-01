@@ -1,10 +1,10 @@
 <?php
 
-class Payment_Extra {
+class Payment_Menu {
 	// Property
 	private $id;
 	private $payment;
-	private $extra;
+	private $menu;
 	private $number;
 	private $date;
 	
@@ -28,7 +28,7 @@ class Payment_Extra {
 	/**
 	 * 
 	 * Enter description here ...
-	 * @param unknown_type $id
+	 * @param unknown_type $payment
 	 */
 	public function set_payment($payment) {
 		$this->payment = $payment;
@@ -45,24 +45,24 @@ class Payment_Extra {
 	/**
 	 * 
 	 * Enter description here ...
-	 * @param unknown_type $device
+	 * @param unknown_type $menu
 	 */
-	public function set_extra($extra) {
-		$this->extra = $extra;
+	public function set_menu($menu) {
+		$this->menu = $menu;
 	}
 	
 	/**
 	 * 
 	 * Enter description here ...
 	 */
-	public function get_extra() {
-		return $this->extra;
+	public function get_menu() {
+		return $this->menu;
 	}
 	
 	/**
 	 * 
 	 * Enter description here ...
-	 * @param unknown_type $start
+	 * @param unknown_type $number
 	 */
 	public function set_number($number) {
 		$this->number = $number;
@@ -96,30 +96,32 @@ class Payment_Extra {
 	/**
 	 * 
 	 * Enter description here ...
+	 * @param unknown_type $payment_id
+	 * @return Ambigous <multitype:, unknown>
 	 */
-	public static function getById($id) {
+	public static function getByPayment($payment_id) {
 		$dbh = $GLOBALS['dbh'];
 		
 		$result = array();
 		$sql = "
 			SELECT 
-				PE.id, P.id as payment, E.id as extra, E.name, E.unit, PE.number, PE.number*E.cost AS tt
+				PM.id, P.id as payment, M.id as menu, M.name, M.unit, PM.number, PM.number*M.cost AS total
 			FROM 
-				payment_extra PE 
-				INNER JOIN payment P ON PE.payment=P.id 
-				INNER JOIN extra E ON PE.extra=E.id
+				payment_menu PM
+				INNER JOIN payment P ON PM.payment=P.id 
+				INNER JOIN menu M ON PM.menu=M.id
 			WHERE 
-				P.id=$id
+				P.id=$payment_id
 		";
 		foreach ($dbh->query($sql) as $r) {
 			$count = count($result);
 			$result[$count]['id'] = $r['id'];
 			$result[$count]['payment'] = $r['payment'];
-			$result[$count]['extra'] = $r['extra'];
+			$result[$count]['menu'] = $r['menu'];
 			$result[$count]['name'] = $r['name'];
 			$result[$count]['unit'] = $r['unit'];
 			$result[$count]['number'] = $r['number'];
-			$result[$count]['tt'] = $r['tt'];
+			$result[$count]['total'] = $r['total'];
 		}
 		
 		return $result;
@@ -128,21 +130,22 @@ class Payment_Extra {
 	/**
 	 * 
 	 * Enter description here ...
-	 * @param $r
+	 * @param Payment_Extra $p
+	 * @return unknown
 	 */
-	public static function save(Payment_Extra $p) {
+	public static function save(Payment_Menu $p) {
 		$dbh = $GLOBALS['dbh'];
 		
 		// Insert
 		$data = $dbh->prepare("
 			INSERT 
-				INTO `payment_extra` (payment, extra, number, date)
+				INTO payment_menu (payment, menu, number, date)
 			VALUES
-				(:payment, :extra, :number, :date)
+				(:payment, :menu, :number, :date)
 		");
 		$data->execute(array(
 			':payment'	=> $p->get_payment(),
-			':extra'	=> $p->get_extra(),
+			':menu'		=> $p->get_menu(),
 			':number'	=> $p->get_number(),
 			':date'		=> $p->get_date()
 		));
@@ -159,16 +162,12 @@ class Payment_Extra {
 		$data = $dbh->prepare("
 			DELETE
 			FROM 
-				`payment_extra`
+				payment_menu
 			WHERE 
 				id=$id
 		");
 		$data->execute(array(
 			':id' => $id
 		));
-		if ($data->rowCount()) {
-			return true;
-		}
-		return false;
 	}
 }

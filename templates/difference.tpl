@@ -8,21 +8,17 @@
 <tr>
 <tr>
 <td>Đơn vị tính tiền mặc định:</td>
-<td><input type="text" name="unit" id="unit" {if $default_unit} value="{$default_unit|number_format:1:",":","}" {/if}> giờ</td>
+<td><input type="text" name="unit" id="unit" {if $default_unit} value="{$default_unit|number_format:0:",":","}" {/if}> giờ</td>
 </tr>
 <tr>
 <td colspan="2">
-<a href="javascript:save()">Cập nhật</a>
+<a href="" id="update">Cập nhật</a>
 </td>
 </tr>
 </table>
 <input class="submit" type="submit">
 </form>
 <script type="text/javascript">
-jQuery('#form1').submit(function() {
-	save();
-	return false;
-});
 
 /**
  * Save
@@ -42,4 +38,15 @@ function save() {
 		}
 	});
 }
+
+jQuery('#update').click(function() {
+	save();
+	return false;
+});
+
+jQuery('#form1').submit(function() {
+	save();
+	return false;
+});
+
 </script>

@@ -88,9 +88,5 @@ class System {
 				':var' => $key
 			));
 		}
-		if ($data->rowCount()) {
-			return true;
-		}
-		return false;
 	}
 }

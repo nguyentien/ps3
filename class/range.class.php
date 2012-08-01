@@ -66,7 +66,7 @@ class Range {
 	/**
 	 * 
 	 * Enter description here ...
-	 * @param $r
+	 * @param Range $r
 	 */
 	public static function save(Range $r) {
 		$dbh = $GLOBALS['dbh'];
@@ -85,7 +85,6 @@ class Range {
 				':name'  => $r->get_name(),
 				':id'    => $r->get_id()
 			));
-			return true;
 		} else {
 			// Insert
 			$data = $dbh->prepare("
@@ -97,11 +96,7 @@ class Range {
 			$data->execute(array(
 				':name' => $r->get_name(),
 			));
-			if ($data->rowCount()) {
-				return true;
-			}
 		}
-		return false;
 	}
 	
 	/**
@@ -122,9 +117,5 @@ class Range {
 		$data->execute(array(
 			':id' => $id
 		));
-		if ($data->rowCount()) {
-			return true;
-		}
-		return false;
 	}
 }

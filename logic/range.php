@@ -6,10 +6,8 @@ include_once 'class/range.class.php';
 if (isset($_POST['insert'])) {
 	$range = new Range();
 	$range->set_name((string) $_POST['name']);
-	if (Range::save($range)) {
-		die('1');
-	}
-	exit;
+	Range::save($range);
+	die('1');
 }
 
 // Update
@@ -18,18 +16,14 @@ if (isset($_POST['update'])) {
 	$range->set_id((int) $_POST['id']);
 	$range->set_name((string) $_POST['name']);
 	
-	if (Range::save($range)) {
-		die('1');
-	}
-	exit();
+	Range::save($range);
+	die('1');
 }
 
 // Delete
 if (isset($_POST['delete'])) {
-	if (Range::delete((int) $_POST['id'])) {
-		die('1');
-	}
-	exit();
+	Range::delete((int) $_POST['id']);
+	die('1');
 }
 
 $ranges = Range::getAll();

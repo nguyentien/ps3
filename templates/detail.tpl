@@ -1,5 +1,6 @@
 {include file="header.tpl"}
 
+<h3>Máy {$device->get_name()}</h3>
 <!-- Payment -->
 <div id="payment" class="float">
 {include file="payment.tpl"}
@@ -7,8 +8,8 @@
 <!-- End Payment -->
 
 <!-- Menu -->
-<div id="payment_extra" class="float">
-{include file="payment_extra.tpl"}
+<div id="payment_menu" class="float">
+{include file="payment_menu.tpl"}
 </div>
 <!-- End Menu -->
 
@@ -22,15 +23,15 @@
 <th>Đơn giá</th>
 <th></th>
 </tr>
-{section name=m loop=$menus}
+{section name=m loop=$list_menu}
 <tr>
 <td>
-<input type="checkbox" name="menu_id" value="{$menus[m]->get_id()}" onclick="displayNumber(this, {$menus[m]->get_id()})">
+<input type="checkbox" name="menu_id" value="{$list_menu[m]->get_id()}" onclick="displayNumber(this, {$list_menu[m]->get_id()})">
 </td>
-<td>{$menus[m]->get_name()}</td>
-<td>{$menus[m]->get_unit()}</td>
-<td>{$menus[m]->get_cost()|number_format:0:",":","}</td>
-<td><input style="width: 40px" type="text" class="hidden" id="number_{$menus[m]->get_id()}" value=1></td>
+<td>{$list_menu[m]->get_name()}</td>
+<td>{$list_menu[m]->get_unit()}</td>
+<td>{$list_menu[m]->get_cost()|number_format:0:",":","}</td>
+<td><input style="width: 40px" type="text" class="hidden" id="number_{$list_menu[m]->get_id()}" value=1></td>
 </tr>
 {/section}
 </table>
@@ -53,10 +54,10 @@ jQuery(document).ready(function() {
 					arr.push(jQuery(this).val());
 					arr1.push(jQuery('#number_' + jQuery(this).val()).val());
 				});
-				jQuery('#payment_extra').load(
-					'payment_extra',
-					'add=1&payment=8&extra=' + arr.toString() +
-					'&number=' + arr1.toString()
+				jQuery('#payment_menu').load(
+					'payment_menu',
+					'add=1&payment_id=' + jQuery('#payment_id').val() + '&menus=' + arr.toString() +
+					'&numbers=' + arr1.toString()
 				);
 				jQuery('#list_menu :checked').each(function() {
 					jQuery(this).attr('checked', false);

@@ -8,10 +8,8 @@ if (isset($_POST['insert'])) {
 	$menu->set_name((string) $_POST['name']);
 	$menu->set_unit((string) $_POST['unit']);
 	$menu->set_cost((float) $_POST['cost']);
-	if (Menu::save($menu)) {
-		die('1');
-	}
-	exit;
+	Menu::save($menu);
+	die('1');
 }
 
 // Update
@@ -21,19 +19,14 @@ if (isset($_POST['update'])) {
 	$menu->set_name((string) $_POST['name']);
 	$menu->set_unit((string) $_POST['unit']);
 	$menu->set_cost((float) $_POST['cost']);
-	
-	if (Menu::save($menu)) {
-		die('1');
-	}
-	exit();
+	Menu::save($menu);
+	die('1');
 }
 
 // Delete
 if (isset($_POST['delete'])) {
-	if (Menu::delete((int) $_POST['id'])) {
-		die('1');
-	}
-	exit();
+	Menu::delete((int) $_POST['id']);
+	die('1');
 }
 
 $menus = Menu::getAll();

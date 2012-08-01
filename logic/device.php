@@ -21,10 +21,8 @@ if (isset($_POST['insert'])) {
 		$device->set_cost((float) $_POST['cost']);
 	}
 	$device->set_range((int) $_POST['range']);
-	if (Device::save($device)) {
-		die('1');
-	}
-	exit;
+	Device::save($device);
+	die('1');
 }
 
 // Update
@@ -35,19 +33,14 @@ if (isset($_POST['update'])) {
 	$device->set_name((string) $_POST['name']);
 	$device->set_cost((float) $_POST['cost']);
 	$device->set_range((int) $_POST['range']);
-	
-	if (Device::save($device)) {
-		die('1');
-	}
-	exit();
+	Device::save($device);
+	die('1');
 }
 
 // Delete
 if (isset($_POST['delete'])) {
-	if (Device::delete((int) $_POST['id'])) {
-		die('1');
-	}
-	exit();
+	Device::delete((int) $_POST['id']);
+	die('1');
 }
 
 $devices = Device::getAll();

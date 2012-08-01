@@ -165,21 +165,23 @@ class Payment {
 	/**
 	 * 
 	 * Enter description here ...
+	 * @param unknown_type $payment_id
+	 * @return Payment
 	 */
-	public static function getById($id) {
+	public static function getById($payment_id) {
 		$dbh = $GLOBALS['dbh'];
 		
 		$sql = "
 			SELECT
 				* 
 			FROM 
-				`payment`
+				payment
 			WHERE
-				id=$id	
+				id=$payment_id
 		";
 		foreach ($dbh->query($sql) as $r) {
 			$payment = new Payment();
-			$payment->set_id($id);
+			$payment->set_id($payment_id);
 			$payment->set_device($r['device']);
 			$payment->set_start($r['start']);
 			$payment->set_stop($r['stop']);
@@ -196,7 +198,41 @@ class Payment {
 	/**
 	 * 
 	 * Enter description here ...
-	 * @param $r
+	 * @param unknown_type $device
+	 * @return Payment
+	 */
+	public static function getByDevice($device) {
+		$dbh = $GLOBALS['dbh'];
+	
+		$sql = "
+				SELECT
+					* 
+				FROM 
+					payment
+				WHERE
+					device=$device AND status=1
+			";
+		foreach ($dbh->query($sql) as $r) {
+			$payment = new Payment();
+			$payment->set_id($r['id']);
+			$payment->set_device($device);
+			$payment->set_start($r['start']);
+			$payment->set_stop($r['stop']);
+			$payment->set_surcharge($r['surcharge']);
+			$payment->set_discount($r['discount']);
+			$payment->set_comment($r['comment']);
+			$payment->set_status($r['status']);
+			$payment->set_date($r['date']);
+		}
+	
+		return $payment;
+	}
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param Payment $p
+	 * @return number
 	 */
 	public static function save(Payment $p) {
 		$dbh = $GLOBALS['dbh'];
@@ -205,7 +241,7 @@ class Payment {
 			// Update
 			$data = $dbh->prepare("
 				UPDATE 
-					`payment`
+					payment
 				SET 
 					device=:device,
 					start=:start,
@@ -214,7 +250,7 @@ class Payment {
 					discount=:discount,
 					comment=:comment,
 					status=:status,
-					date=:date,
+					date=:date
 				WHERE 
 					id=:id
 			");
@@ -233,7 +269,7 @@ class Payment {
 			// Insert
 			$data = $dbh->prepare("
 				INSERT 
-					INTO `payment` (device, start, stop, surcharge, discount, comment, status, date)
+					INTO payment(device, start, stop, surcharge, discount, comment, status, date)
 				VALUES
 					(:device, :start, :stop, :surcharge, :discount, :comment, :status, :date)
 			");
@@ -251,30 +287,63 @@ class Payment {
 				return $dbh->lastInsertId();
 			}
 		}
-		return 0;
+		return false;
 	}
 	
 	/**
 	 * 
 	 * Enter description here ...
-	 * @param unknown_type $id
+	 * @param unknown_type $payment_id
 	 */
-	public static function delete($id) {
+	public static function getTotal($payment_id) {
 		$dbh = $GLOBALS['dbh'];
 		
-		$data = $dbh->prepare("
-			DELETE
+		$total1		= 0;
+		$total2		= 0;
+		$discount	= 0;
+		$unit		= 1;
+		
+		$result = $dbh->query("
+			SELECT 
+				val
 			FROM 
-				`range`
-			WHERE 
-				id = :id
+				system
+			WHERE
+				var='default_unit'
 		");
-		$data->execute(array(
-			':id' => $id
-		));
-		if ($data->rowCount()) {
-			return true;
+		foreach ($result as $r) {
+			$unit = (float) $r['val'];
 		}
-		return false;
+		$unit = $unit * 3600;
+		
+		$result = $dbh->query("
+			SELECT 
+				(P.stop - P.start) / $unit * D.cost + P.surcharge AS total, P.discount 
+			FROM 
+				payment P 
+				INNER JOIN device D ON P.device=D.id 
+			WHERE 
+				P.id=$payment_id
+		");
+		foreach ($result as $r) {
+			$total1		= $r['total'];
+			$discount	= $r['discount'];
+		}
+		$result = $dbh->query("
+			SELECT 
+				SUM(PM.number * M.cost) as total
+			FROM 
+				payment_menu PM 
+				INNER JOIN menu M ON M.id=PM.menu 
+			GROUP BY 
+				PM.payment 
+			HAVING 
+				PM.payment=$payment_id
+		");
+		foreach ($result as $r) {
+			$total2 = $r['total'];
+		}
+		
+		return array($total1 + $total2, $total1 + $total2 - $discount);
 	}
 }
