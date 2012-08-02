@@ -221,6 +221,8 @@ class Device {
 			$result['cost'] = $r['cost'];
 			if ($r['status'] == 1) {
 				$result['status'] = 1;
+			} else {
+				$result['status'] = 0;
 			}
 		}
 		return $result;

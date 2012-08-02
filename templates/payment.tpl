@@ -9,24 +9,24 @@
 <tr>
 <td>Bắt đầu</td>
 <td>
-{if $status}
-<input type="text" disabled="disabled">
+{if $start}
+<input type="text" disabled="disabled" value="{$payment->get_date()|date_format:'%H:%M:%S'}">
 {else}
 <a href="" id="begin">Bắt đầu</a>
 {/if}
 </td>
 <td>Kết thúc</td>
 <td>
-{if $status}
-<a href="" id="end">Kết thúc</a>
-{else}
+{if $end}
 <input type="text" disabled="disabled">
+{else}
+<a href="" id="end">Kết thúc</a>
 {/if}
 </td>
 </tr>
 <tr>
 <td>Tiền giờ</td>
-<td><input type="text" value="{$cost|number_format:0:",":","}"></td>
+<td><input type="text" value="{$cost|number_format:0:',':','}"></td>
 <td>Phụ thu</td>
 <td><input type="text"></td>
 </tr>
@@ -59,16 +59,16 @@
 <script type="text/javascript">
 jQuery('#begin').click(function() {
 	jQuery('#payment').load(
-		'detail',
-		'payment=1&id={$id}&start=1'
+		'payment',
+		'device={$id}&start=1'
 	);
 	return false;
 });
 
 jQuery('#end').click(function() {
 	jQuery('#payment').load(
-		'detail',
-		'payment=1&id={$id}&end=1'
+		'payment',
+		'device={$id}&end=1'
 	);
 	return false;
 });

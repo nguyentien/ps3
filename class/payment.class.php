@@ -166,24 +166,31 @@ class Payment {
 	 * 
 	 * Enter description here ...
 	 */
-	public static function getAll() {
+	public static function getById($id) {
 		$dbh = $GLOBALS['dbh'];
 		
-		$result = array();
 		$sql = "
 			SELECT
 				* 
 			FROM 
-				`range`
+				`payment`
+			WHERE
+				id=$id	
 		";
 		foreach ($dbh->query($sql) as $r) {
-			$range = new Range();
-			$range->set_id($r['id']);
-			$range->set_name($r['name']);
-			$result[] = $range;
+			$payment = new Payment();
+			$payment->set_id($id);
+			$payment->set_device($r['device']);
+			$payment->set_start($r['start']);
+			$payment->set_stop($r['stop']);
+			$payment->set_surcharge($r['surcharge']);
+			$payment->set_discount($r['discount']);
+			$payment->set_comment($r['comment']);
+			$payment->set_status($r['status']);
+			$payment->set_date($r['date']);
 		}
 		
-		return $result;
+		return $payment;
 	}
 	
 	/**
@@ -191,40 +198,60 @@ class Payment {
 	 * Enter description here ...
 	 * @param $r
 	 */
-	public static function save(Range $r) {
+	public static function save(Payment $p) {
 		$dbh = $GLOBALS['dbh'];
 		
-		if ($r->get_id()) {
+		if ($p->get_id()) {
 			// Update
 			$data = $dbh->prepare("
 				UPDATE 
-					`range`
+					`payment`
 				SET 
-					name=:name
+					device=:device,
+					start=:start,
+					stop=:stop,
+					surcharge=:surcharge,
+					discount=:discount,
+					comment=:comment,
+					status=:status,
+					date=:date,
 				WHERE 
 					id=:id
 			");
 			$data->execute(array(
-				':name'  => $r->get_name(),
-				':id'    => $r->get_id()
+				':device'		=> $p->get_device(),
+				':start'		=> $p->get_start(),
+				':stop'			=> $p->get_stop(),
+				':surcharge'	=> $p->get_surcharge(),
+				':discount'		=> $p->get_discount(),
+				':comment'		=> $p->get_comment(),
+				':status'		=> $p->get_status(),
+				':date'			=> $p->get_date(),
+				':id'			=> $p->get_id()
 			));
-			return true;
 		} else {
 			// Insert
 			$data = $dbh->prepare("
 				INSERT 
-					INTO `range` (name)
+					INTO `payment` (device, start, stop, surcharge, discount, comment, status, date)
 				VALUES
-					(:name)
+					(:device, :start, :stop, :surcharge, :discount, :comment, :status, :date)
 			");
 			$data->execute(array(
-				':name' => $r->get_name(),
+				':device'		=> $p->get_device(),
+				':start'		=> $p->get_start(),
+				':stop'			=> $p->get_stop(),
+				':surcharge'	=> $p->get_surcharge(),
+				':discount'		=> $p->get_discount(),
+				':comment'		=> $p->get_comment(),
+				':status'		=> $p->get_status(),
+				':date'			=> $p->get_date()
 			));
 			if ($data->rowCount()) {
-				return true;
+				return $dbh->lastInsertId();
 			}
 		}
-		return false;
+		return 0;
 	}
 	
 	/**

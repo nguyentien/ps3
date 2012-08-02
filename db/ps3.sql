@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v9.50 
-MySQL - 5.5.16 : Database - ps3
+MySQL - 5.5.24-log : Database - ps3
 *********************************************************************
 */
 
@@ -32,7 +32,7 @@ CREATE TABLE `device` (
 
 /*Data for the table `device` */
 
-insert  into `device`(`id`,`uid`,`name`,`cost`,`range`,`status`) values (8,'sdkgs','kkasdfk',224,12,NULL),(9,'452','ps3',22222,12,NULL),(23,'jii','jkk',65,12,NULL),(24,'wert','wert',0,12,NULL),(25,'adf','adfadf',7533,11,NULL),(26,'46345','356',3456,11,NULL),(27,'356','3563',7533,11,NULL),(28,'456','4564',8000,11,NULL),(31,'sdg','may 1',8000,11,NULL);
+insert  into `device`(`id`,`uid`,`name`,`cost`,`range`,`status`) values (8,'sdkgs','kkasdfk',22455,12,NULL),(9,'452','ps3',22222,12,NULL),(23,'jii','jkk',65,12,NULL),(24,'wert','wert',0,12,NULL),(25,'adf','adfadf',7533,11,NULL),(26,'46345','356',3456,11,NULL),(27,'356','3563',7533,11,NULL),(28,'456','4564',8000,11,NULL),(31,'sdg','may 1',8000,11,NULL);
 
 /*Table structure for table `extra` */
 
@@ -61,27 +61,32 @@ CREATE TABLE `payment` (
   `stop` int(11) DEFAULT NULL,
   `surcharge` float DEFAULT NULL,
   `discount` float DEFAULT NULL,
-  `comments` varchar(255) DEFAULT NULL,
+  `comment` varchar(255) DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
   `date` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 /*Data for the table `payment` */
+
+insert  into `payment`(`id`,`device`,`start`,`stop`,`surcharge`,`discount`,`comment`,`status`,`date`) values (10,8,1343919901,0,0,0,'',0,1343919901),(11,8,1343920266,0,0,0,'',0,1343920266),(12,8,1343920284,0,0,0,'',0,1343920284),(13,8,1343920307,0,0,0,'',0,1343920307),(14,8,1343920372,0,0,0,'',0,1343920372);
 
 /*Table structure for table `payment_extra` */
 
 DROP TABLE IF EXISTS `payment_extra`;
 
 CREATE TABLE `payment_extra` (
-  `payment` int(11) NOT NULL,
-  `extra` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `payment` int(11) DEFAULT NULL,
+  `extra` int(11) DEFAULT NULL,
   `number` int(11) DEFAULT NULL,
   `date` int(11) DEFAULT NULL,
-  PRIMARY KEY (`payment`,`extra`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 /*Data for the table `payment_extra` */
+
+insert  into `payment_extra`(`id`,`payment`,`extra`,`number`,`date`) values (12,1,12,2,1343917590),(13,1,13,2,1343917590),(14,1,14,2,1343917590),(15,1,15,2,1343917590);
 
 /*Table structure for table `range` */
 
