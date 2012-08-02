@@ -10,7 +10,16 @@
 <title>PS3</title>
 </head>
 <body>
-<!-- Wrapper -->
-<div id="wrapper">
-<div id="header">Header</div>
-<div id="menu">{include file = "mainmenu.tpl"}</div>
+<!-- Header -->
+<div id="header_wrap">
+<div class="center">
+<ul>
+<li><a href="system" {if $menu eq 2} class="selected" {/if}>Hệ thống</a></li>
+<li><a href="dashboard" {if $menu eq 1} class="selected" {/if}>Quản lý máy</a></li>
+</ul>
+</div>
+</div>
+<!-- End header -->
+<!-- Content -->
+<div id="content_wrap">
+<div class="center">

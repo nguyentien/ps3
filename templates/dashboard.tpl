@@ -1,4 +1,6 @@
 {include file="header.tpl"}
+
+<div class="content">
 {section name=r loop=$ranges}
 	<div class="range" style="width: {$width}px">
 	<h3>{$ranges[r]->get_name()}</h3>
@@ -20,4 +22,7 @@
 	</ul>
 	</div>
 {/section}
+<div class="clear"></div>
+</div>
+
 {include file="footer.tpl"}
