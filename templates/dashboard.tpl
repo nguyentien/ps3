@@ -1,6 +1,6 @@
 {include file="header.tpl"}
 
-<div class="content">
+<div id="dashboard">
 {section name=r loop=$ranges}
 	<div class="range" style="width: {$width}px">
 	<h3>{$ranges[r]->get_name()}</h3>

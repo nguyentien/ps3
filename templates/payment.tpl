@@ -2,8 +2,8 @@
 <tr>
 <td colspan="4">
 	<span>Tổng các lần trước</span>
-	<input type="text">
-	<a href="">Chi tiết</a>
+	<input type="text" style="width: 200px">
+	<a href="javascript: alert('Chuc nang nay chua hoan thanh!')" style="float: right; margin: 0px">Chi tiết</a>
 </td>
 </tr>
 <tr>
@@ -47,14 +47,14 @@
 <tr>
 <td colspan="4">
 	<a href="" id="save_new">Lưu lượt này, Tạo lượt mới</a>
-	<a href="">In phiếu</a>
+	<a href="javascript: alert('Chuc nang nay chua hoan thanh!')">In phiếu</a>
 </td>
 </tr>
 <tr>
 <td colspan="4">
 	<a href="" id="switch">Chuyển máy</a>
 	<a href="" id="pay_machine">Trả máy</a>
-	<a href="" id="cash">Thu tiền</a>
+	<a href="" id="cash" style="float: right; margin: 0px">Thu tiền</a>
 </td>
 </tr>
 </table>

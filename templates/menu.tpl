@@ -1,110 +1,54 @@
 {if $menus}
 <h3>Danh sách thực đơn</h3>
-<table>
+<table class="table">
 <tr>
-<th>STT</th>
+<th style="width: 40px">STT</th>
 <th>Tên thực đơn</th>
 <th>ĐVT</th>
 <th>Đơn giá</th>
+<th></th>
+<th style="width: 115px"></th>
 </tr>
 {section name=m loop=$menus}
 <tr>
-<td>{$smarty.section.m.index + 1}</td>
+<td><span>{$smarty.section.m.index + 1}</span></td>
 <td>{$menus[m]->get_name()}</td>
 <td>{$menus[m]->get_unit()}</td>
 <td>{$menus[m]->get_cost()|number_format:0:",":","}</td>
+<td></td>
 <td>
 	<a href="javascript: menu_update_layout({$menus[m]->get_id()}, '{$menus[m]->get_name()}', '{$menus[m]->get_unit()}', {$menus[m]->get_cost()})">Sửa</a>
 	<a href="javascript: menu_delete({$menus[m]->get_id()})">Xoá</a></td>
 </tr>
 {/section}
+<tr>
+<td colspan="5"></td>
+<td><a style="float: right; margin-right: 13px" href="" id="insert">Thêm mới</a></td>
+</tr>
 </table>
 {/if}
-<form id="form1" action="" method="post">
-<table>
-<tr>
-<td>Tên thực đơn:</td>
-<td><input type="text" name="name" id="name"></td>
-</tr>
-<tr>
-<td>Đơn vị tính:</td>
-<td><input type="text" name="unit" id="unit"></td>
-</tr>
-<tr>
-<td>Đơn giá:</td>
-<td><input type="text" name="cost" id="cost"></td>
-</tr>
-<tr>
-<td colspan="2">
-<a href="javascript: menu_update()" id="update" class="hidden">Cập nhật</a>
-<a href="javascript: menu_save()" id="insert">Thêm mới</a>
-</td>
-</tr>
-</table>
-<!-- Hidden -->
-<input type="hidden" name="id" id="id">
-<!-- End -->
-<input class="submit" type="submit">
-</form>
 <script type="text/javascript">
-jQuery('#form1').submit(function() {
-	if (jQuery('#id').val()) {
-		menu_update();
-	} else {
-		menu_save();
-	}
+
+jQuery('#insert').click(function() {
+	jQuery('#id_menu').val('');
+	jQuery('#name_menu').val('');
+	jQuery('#unit').val('');
+	jQuery('#cost_menu').val('');
+	
+	jQuery('#action_menu').dialog('open');
 	return false;
 });
-
-/**
- * Save
- */
-function menu_save() {
-	if (!jQuery('#name').val() || !jQuery('#unit').val() || !jQuery('#cost').val()) {
-		alert('Vui lòng nhập đầy đủ thông tin!');
-		return false;
-	}
-	jQuery.ajax({
-		url: 'menu',
-		data: 'insert=1&name=' + jQuery('#name').val() + '&unit='+jQuery('#unit').val() + '&cost='+jQuery('#cost').val(),
-		type: 'POST',
-		success: function(result) {
-			loadContent(2);
-		}
-	});
-}
 
 /**
  * Update layout
  */
 function menu_update_layout(id, name, unit, cost) {
-	jQuery('#id').val(id);
-	jQuery('#name').val(name);
+	jQuery('#id_menu').val(id);
+	jQuery('#name_menu').val(name);
 	jQuery('#unit').val(unit);
-	jQuery('#cost').val(cost);
+	jQuery('#cost_menu').val(cost);
 	
-	jQuery('#update').removeClass('hidden');
-	jQuery('#insert').addClass('hidden');
-}
-
-/**
- * Update
- */
-function menu_update() {
-	if (!jQuery('#name').val() || !jQuery('#unit').val() || !jQuery('#cost').val()) {
-		alert('Vui lòng nhập đầy đủ thông tin!');
-		return false;
-	}
-	jQuery.ajax({
-		url: 'menu',
-		data: 'update=1&id=' + jQuery('#id').val() + '&name=' + jQuery('#name').val() + '&unit=' + jQuery('#unit').val() + '&cost=' + jQuery('#cost').val(),
-		type: 'POST',
-		success: function(result) {
-			if (result) {
-				loadContent(2);
-			}
-		}
-	});
+	jQuery('#action_menu').dialog('open');
 }
 
 /**

@@ -1,14 +1,14 @@
 <h3>Thông tin khác</h3>
-<form id="form1" action="" method="post">
-<table>
+<form id="form1" action="" method="post" style="margin: 10px 0px 0px 0px">
+<table id="difference">
 <tr>
-<td>Giá mặc định cho mỗi máy:</td>
-<td><input type="text" name="cost" id="cost" {if $default_cost} value="{$default_cost|number_format:0:",":","}" {/if}></td>
+<td style="width: 200px;">Giá mặc định cho mỗi máy:</td>
+<td><input style="width: 100px" type="text" name="cost" id="cost" {if $default_cost} value="{$default_cost|number_format:0:",":","}" {/if}></td>
 </tr>
 <tr>
 <tr>
 <td>Đơn vị tính tiền mặc định:</td>
-<td><input type="text" name="unit" id="unit" {if $default_unit} value="{$default_unit|number_format:0:",":","}" {/if}> giờ</td>
+<td><input style="width: 100px" type="text" name="unit" id="unit" {if $default_unit} value="{$default_unit|number_format:0:",":","}" {/if}> giờ</td>
 </tr>
 <tr>
 <td colspan="2">
@@ -21,9 +21,17 @@
 <script type="text/javascript">
 
 /**
- * Save
+ * Update
  */
-function save() {
+jQuery('#update').click(function() {
+	jQuery('#form1').submit();
+	return false;
+});
+
+/**
+ * Submit form
+ */
+jQuery('#form1').submit(function() {
 	var data;
 	data = 'save=1&cost=' + jQuery('#cost').val() + '&unit=' + jQuery('#unit').val();
 	jQuery.ajax({
@@ -37,15 +45,6 @@ function save() {
 			}
 		}
 	});
-}
-
-jQuery('#update').click(function() {
-	save();
-	return false;
-});
-
-jQuery('#form1').submit(function() {
-	save();
 	return false;
 });
 

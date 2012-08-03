@@ -1,103 +1,52 @@
 <!-- List -->
 {if $ranges}
 <h3>Danh sách dãy máy</h3>
-<table>
+<table class="table">
 <tr>
-<th>STT</th>
-<th>Tên</th>
+<th style="width: 40px">STT</th>
+<th style="width: 130px">Tên</th>
 <th></th>
+<th style="width: 115px"></th>
 </tr>
 {section name=r loop=$ranges}
 <tr>
-<td>{$smarty.section.r.index + 1}</td>
+<td><span>{$smarty.section.r.index + 1}</span></td>
 <td>{$ranges[r]->get_name()}</td>
+<td></td>
 <td>
 	<a href="javascript: range_update_layout({$ranges[r]->get_id()}, '{$ranges[r]->get_name()}')">Sửa</a>
 	<a href="javascript: range_delete({$ranges[r]->get_id()})">Xoá</a></td>
 </td>
 </tr>
 {/section}
+<tr>
+<td colspan="3"></td>
+<td><a style="float: right; margin-right: 13px" href="" id="insert">Thêm mới</a></td>
+</tr>
 </table>
 {/if}
 <!-- End List -->
 
-<!-- Insert, Update -->
-<form id="form1" action="" method="post">
-<table>
-<tr>
-<td>Tên:</td>
-<td><input type="text" name="name" id="name"></td>
-</tr>
-<tr>
-<td colspan="2">
-	<a href="javascript: range_update()" id="update" class="hidden">Cập nhật</a>
-	<a href="javascript: range_save()" id="insert">Thêm mới</a>
-</td>
-</tr>
-</table>
-<!-- Hidden -->
-<input type="hidden" name="id" id="id">
-<!-- End -->
-<input class="submit" type="submit">
-</form>
-<!-- End Insert, Update -->
 <script type="text/javascript">
-jQuery('#form1').submit(function() {
-	if (jQuery('#id').val()) {
-		range_update();
-	} else {
-		range_save();
-	}
+/**
+ * Open
+ */
+jQuery('#insert').click(function() {
+	jQuery('#id_range').val('');
+	jQuery('#name_range').val('');
+	
+	jQuery('#action_range').dialog('open');
 	return false;
 });
-
-/**
- * Save
- */
-function range_save() {
-	if (!jQuery('#name').val()) {
-		alert('Vui lòng nhập tên của dãy!');
-		return false;
-	}
-	jQuery.ajax({
-		url: 'range',
-		data: 'insert=1&name=' + jQuery('#name').val(),
-		type: 'POST',
-		success: function(result) {
-			loadContent(0);
-		}
-	});
-}
 
 /**
  * Update layout
  */
 function range_update_layout(id, name) {
-	jQuery('#id').val(id);
-	jQuery('#name').val(name);
+	jQuery('#id_range').val(id);
+	jQuery('#name_range').val(name);
 	
-	jQuery('#update').removeClass('hidden');
-	jQuery('#insert').addClass('hidden');
-}
-
-/**
- * Update
- */
-function range_update() {
-	if (!jQuery('#name').val()) {
-		alert('Vui lòng nhập tên của dãy!');
-		return false;
-	}
-	jQuery.ajax({
-		url: 'range',
-		data: 'update=1&id=' + jQuery('#id').val() + '&name=' + jQuery('#name').val(),
-		type: 'POST',
-		success: function(result) {
-			if (result) {
-				loadContent(0);
-			}
-		}
-	});
+	jQuery('#action_range').dialog('open');
 }
 
 /**

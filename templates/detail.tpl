@@ -1,5 +1,6 @@
 {include file="header.tpl"}
 
+<div id="detail">
 <h3>Máy {$device->get_name()}</h3>
 <!-- Payment -->
 <div id="payment" class="float">
@@ -11,21 +12,22 @@
 <div id="payment_menu" class="float">
 {include file="payment_menu.tpl"}
 </div>
+<div class="clear"></div>
 <!-- End Menu -->
 
 <!-- List menu -->
 <div id="list_menu">
-<table>
+<table class="table">
 <tr>
-<td></td>
+<th style="width: 20px"></th>
 <th>Tên thực đơn</th>
-<th>Đơn vị tính</th>
+<th>ĐVT</th>
 <th>Đơn giá</th>
 <th></th>
 </tr>
 {section name=m loop=$list_menu}
 <tr>
-<td>
+<td style="padding-top: 15px">
 <input type="checkbox" name="menu_id" value="{$list_menu[m]->get_id()}" onclick="displayNumber(this, {$list_menu[m]->get_id()})">
 </td>
 <td>{$list_menu[m]->get_name()}</td>
@@ -40,11 +42,14 @@
 
 <!-- List device -->
 <div id="list_device">
+<form>
 <table>
 <tr>
-<td>Chọn máy: </td>
-<td>
-<select id="device_id">
+<td colspan="2"><p>Chọn máy: </p></td>
+</tr>
+<tr>
+<td colspan="2">
+<select id="device_id" style="width: 100%">
 {section name=d loop=$list_device}
 <option value="{$list_device[d]['id']}">{$list_device[d]['name']}</option>
 {/section}
@@ -52,8 +57,10 @@
 </td>
 </tr>
 </table>
+</form>
 </div>
 <!-- End list device -->
+</div>
 <script type="text/javascript">
 jQuery(document).ready(function() {
 	jQuery('#list_menu').dialog({
