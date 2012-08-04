@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="SHORTCUT ICON" href="images/favicon.ico"/>
 <link href="style/style.css" type="text/css" rel="stylesheet">
 <link href="style/jquery-ui-1.8.22.custom.min.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
@@ -14,6 +15,7 @@
 <div id="header_wrap">
 <div class="center">
 <ul>
+<li><a href="login">Đăng xuất</a></li>
 <li><a href="system" {if $menu eq 2} class="selected" {/if}>Hệ thống</a></li>
 <li><a href="dashboard" {if $menu eq 1} class="selected" {/if}>Quản lý máy</a></li>
 </ul>

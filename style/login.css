@@ -1,0 +1,20 @@
+#login {
+	font-family: Arial, San-serif;
+}
+
+#login label {
+	display: block;
+	padding: 10px 0px;
+}
+
+#login input {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border-color: #DCDEE2 #E9EBED #E9EBED #DCDEE2;
+	border-style: solid;
+	border-width: 1px;
+	width: 100%;
+}
+
+#login button {
+	margin: 15px 0px;
+}

@@ -13,7 +13,6 @@ $name	= array_shift($arr);
 if ($name) {
 	if ($name == 'login') {
 		include_once $root . '/logic/' . $name . '.php';
-		exit();
 	} else {
 		if (!$_SESSION['isLogin']) {
 			header('Location: /login');
