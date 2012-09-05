@@ -2,6 +2,8 @@
 
 session_start();
 
+set_include_path(dirname(__FILE__) . '/library/PEAR/');
+
 include_once 'include/config.php';
 include_once 'include/connect.php';
 
