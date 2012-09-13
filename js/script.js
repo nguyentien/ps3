@@ -8,6 +8,7 @@ function loadContent(id) {
 			jQuery('#sys_range').addClass('selected');
 			jQuery('#sys_device').removeClass('selected');
 			jQuery('#sys_menu').removeClass('selected');
+			jQuery('#sys_report').removeClass('selected');
 			jQuery('#sys_diff').removeClass('selected');
 			jQuery.ajax ({
 				url: 'range',
@@ -20,6 +21,7 @@ function loadContent(id) {
 			jQuery('#sys_range').removeClass('selected');
 			jQuery('#sys_device').addClass('selected');
 			jQuery('#sys_menu').removeClass('selected');
+			jQuery('#sys_report').removeClass('selected');
 			jQuery('#sys_diff').removeClass('selected');
 			jQuery.ajax ({
 				url: 'device',
@@ -32,6 +34,7 @@ function loadContent(id) {
 			jQuery('#sys_range').removeClass('selected');
 			jQuery('#sys_device').removeClass('selected');
 			jQuery('#sys_menu').addClass('selected');
+			jQuery('#sys_report').removeClass('selected');
 			jQuery('#sys_diff').removeClass('selected');
 			jQuery.ajax ({
 				url: 'menu',
@@ -44,6 +47,20 @@ function loadContent(id) {
 			jQuery('#sys_range').removeClass('selected');
 			jQuery('#sys_device').removeClass('selected');
 			jQuery('#sys_menu').removeClass('selected');
+			jQuery('#sys_report').addClass('selected');
+			jQuery('#sys_diff').removeClass('selected');
+			jQuery.ajax ({
+				url: 'report',
+				success: function (result) {
+					jQuery('#content').html(result);
+				}
+			});
+			break;
+		case 4:
+			jQuery('#sys_range').removeClass('selected');
+			jQuery('#sys_device').removeClass('selected');
+			jQuery('#sys_menu').removeClass('selected');
+			jQuery('#sys_report').removeClass('selected');
 			jQuery('#sys_diff').addClass('selected');
 			jQuery.ajax ({
 				url: 'difference',
