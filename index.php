@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(0);
+date_default_timezone_set('Asia/Ho_Chi_Minh');
+
 session_start();
 
 include_once 'include/config.php';
