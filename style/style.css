@@ -257,3 +257,15 @@ Main layout
 	margin: 10px 0px 0px 10px;
 	width: 468px;
 }
+
+#report fieldset {
+	width: 280px;
+	float: left;
+	margin-right: 10px;
+	padding: 10px;
+	height: 250px;
+}
+
+#report p, #report input, #report select {
+	margin: 10px 0px 10px 0px;
+}

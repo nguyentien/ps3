@@ -8,8 +8,8 @@ function loadContent(id) {
 			jQuery('#sys_range').addClass('selected');
 			jQuery('#sys_device').removeClass('selected');
 			jQuery('#sys_menu').removeClass('selected');
-			jQuery('#sys_report').removeClass('selected');
 			jQuery('#sys_diff').removeClass('selected');
+			jQuery('#sys_report').removeClass('selected');
 			jQuery.ajax ({
 				url: 'range',
 				success: function (result) {
@@ -21,8 +21,8 @@ function loadContent(id) {
 			jQuery('#sys_range').removeClass('selected');
 			jQuery('#sys_device').addClass('selected');
 			jQuery('#sys_menu').removeClass('selected');
-			jQuery('#sys_report').removeClass('selected');
 			jQuery('#sys_diff').removeClass('selected');
+			jQuery('#sys_report').removeClass('selected');
 			jQuery.ajax ({
 				url: 'device',
 				success: function (result) {
@@ -34,8 +34,8 @@ function loadContent(id) {
 			jQuery('#sys_range').removeClass('selected');
 			jQuery('#sys_device').removeClass('selected');
 			jQuery('#sys_menu').addClass('selected');
-			jQuery('#sys_report').removeClass('selected');
 			jQuery('#sys_diff').removeClass('selected');
+			jQuery('#sys_report').removeClass('selected');
 			jQuery.ajax ({
 				url: 'menu',
 				success: function (result) {
@@ -47,10 +47,10 @@ function loadContent(id) {
 			jQuery('#sys_range').removeClass('selected');
 			jQuery('#sys_device').removeClass('selected');
 			jQuery('#sys_menu').removeClass('selected');
-			jQuery('#sys_report').addClass('selected');
-			jQuery('#sys_diff').removeClass('selected');
+			jQuery('#sys_diff').addClass('selected');
+			jQuery('#sys_report').removeClass('selected');
 			jQuery.ajax ({
-				url: 'report',
+				url: 'difference',
 				success: function (result) {
 					jQuery('#content').html(result);
 				}
@@ -60,10 +60,10 @@ function loadContent(id) {
 			jQuery('#sys_range').removeClass('selected');
 			jQuery('#sys_device').removeClass('selected');
 			jQuery('#sys_menu').removeClass('selected');
-			jQuery('#sys_report').removeClass('selected');
-			jQuery('#sys_diff').addClass('selected');
+			jQuery('#sys_diff').removeClass('selected');
+			jQuery('#sys_report').addClass('selected');
 			jQuery.ajax ({
-				url: 'difference',
+				url: 'report',
 				success: function (result) {
 					jQuery('#content').html(result);
 				}

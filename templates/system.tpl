@@ -5,8 +5,8 @@
 <li><a href="" id="sys_range">Dãy</a></li>
 <li><a href="" id="sys_device">Máy</a></li>
 <li><a href="" id="sys_menu">Thực đơn</a></li>
-<li><a href="" id="sys_report">Báo cáo</a></li>
 <li><a href="" id="sys_diff">Thông tin khác</a></li>
+<li><a href="" id="sys_report">Báo cáo</a></li>
 </ul>
 <div class="clear"></div>
 
@@ -160,13 +160,13 @@ jQuery(document).ready(function() {
 	});
 	
 	// Click menu "thong tin khac"
-	jQuery('#sys_report').click(function() {
+	jQuery('#sys_diff').click(function() {
 		loadContent(3);
 		return false;
 	});
 
 	// Click menu "Bao cao"
-	jQuery('#sys_diff').click(function() {
+	jQuery('#sys_report').click(function() {
 		loadContent(4);
 		return false;
 	});
