@@ -1,9 +1,7 @@
 <?php
 
-set_include_path(dirname(dirname(__FILE__)) . '/library/PEAR/');
+include_once 'class/device.class.php';
 
-include_once 'Spreadsheet/Excel/Writer.php';
-
-$writer = new Spreadsheet_Excel_Writer();
+$smarty->assign('device', Device::getAll());
 
 $smarty->display('report.tpl');

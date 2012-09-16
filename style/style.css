@@ -117,23 +117,23 @@ h3 {
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 0 #FF7242 inset;
 }
 
-form {
+.form {
+	margin: 10px 0px 0px 0px;
 	background: none repeat scroll 0 0 #E9EAEB;
 	padding: 10px;
 	border: 1px solid #DFE1E6;
 }
 
-form p {
-	display: block;
+.form p {
 	padding: 0px 0px 10px 0px;
 	font-weight: bold;
 }
 
-form table {
+.form table {
 	width: 100%;
 }
 
-form input, #payment input, #list_menu input {
+.form input, #payment input, #list_menu input {
 	width: 100%;
 	background: none repeat scroll 0 0 #FFFFFF;
 	border-color: #DCDEE2 #E9EBED #E9EBED #DCDEE2;
@@ -141,7 +141,7 @@ form input, #payment input, #list_menu input {
 	border-width: 1px;
 }
 
-form span {
+.form span {
 	width: 100%;
 	display: block;
 	border-bottom: 1px solid #D8DAE0;
@@ -258,14 +258,24 @@ Main layout
 	width: 468px;
 }
 
+#report {
+	border: none;
+	padding: 0px;
+	background: none;
+}
+
 #report fieldset {
 	width: 280px;
 	float: left;
 	margin-right: 10px;
 	padding: 10px;
-	height: 250px;
+	height: 310px;
 }
 
 #report p, #report input, #report select {
 	margin: 10px 0px 10px 0px;
+}
+
+#report h3 {
+	margin-bottom: 10px;
 }

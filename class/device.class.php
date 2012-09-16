@@ -237,4 +237,48 @@ class Device {
 		}
 		return $d;
 	}
+	
+	/**
+	 * 
+	 * Get data for report
+	 * @param int $id
+	 * @param int $date
+	 */
+	public static function getDataReport($id, $date) {
+		$dbh = $GLOBALS['dbh'];
+		
+		if ($id) {
+			$where = ' AND D.id=' . $id;
+		} else {
+			$where = '1=1';
+		}
+		$sql = "
+			SELECT 
+				D.name,
+				SUM(P.stop-P.start)/3600 AS sumhour,
+				SUM(P.`stop`-P.`start`)/3600*D.cost AS summoney,
+				SUM(PM.number*M.cost) AS summenu,
+				SUM(P.`stop`-P.`start`)/3600*D.cost+SUM(PM.`number`*M.`cost`) AS sumfinal
+			FROM
+				device D
+				LEFT JOIN payment P ON D.id=P.device
+				LEFT JOIN payment_menu PM ON P.id=PM.payment
+				LEFT JOIN menu M ON M.id=PM.menu
+			WHERE
+				$where
+			GROUP BY
+				D.id
+		";
+		$rows = array();
+		foreach ($dbh->query($sql) as $r) {
+			$index = count($rows);
+			$rows[$index]['name'] = $r['name'];
+			$rows[$index]['sumhour'] = $r['sumhour'];
+			$rows[$index]['summoney'] = $r['summoney'];
+			$rows[$index]['summenu'] = $r['summenu']; 
+			$rows[$index]['sumfinal'] = $r['sumfinal'];
+		}
+		
+		return $rows;
+	}
 }

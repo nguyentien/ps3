@@ -1,5 +1,5 @@
 <h3>Thông tin khác</h3>
-<form id="form1" action="" method="post" style="margin: 10px 0px 0px 0px">
+<form id="form1" action="" method="post" class="form">
 <table id="difference">
 <tr>
 <td style="width: 200px;">Giá mặc định cho mỗi máy:</td>
