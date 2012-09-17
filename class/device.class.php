@@ -213,6 +213,23 @@ class Device {
 	/**
 	 * 
 	 * Enter description here ...
+	 */
+	public static function deleteSpamData() {
+		$dbh = $GLOBALS['dbh'];
+		
+		$data = $dbh->prepare("
+			DELETE
+			FROM
+				payment
+			WHERE
+				stop=0
+		");
+		$data->execute();
+	}
+	
+	/**
+	 * 
+	 * Enter description here ...
 	 * @param int $id
 	 */
 	public static function getById($id) {
@@ -253,12 +270,11 @@ class Device {
 			$where = '1=1';
 		}
 		$sql = "
-			SELECT 
+			SELECT
 				D.name,
-				SUM(P.stop-P.start)/3600 AS sumhour,
-				SUM(P.`stop`-P.`start`)/3600*D.cost AS summoney,
-				SUM(PM.number*M.cost) AS summenu,
-				SUM(P.`stop`-P.`start`)/3600*D.cost+SUM(PM.`number`*M.`cost`) AS sumfinal
+				SUM(P.stop-P.start) AS sumhour,
+				D.cost,
+				SUM(PM.number*M.cost) AS summenu
 			FROM
 				device D
 				LEFT JOIN payment P ON D.id=P.device
@@ -274,9 +290,8 @@ class Device {
 			$index = count($rows);
 			$rows[$index]['name'] = $r['name'];
 			$rows[$index]['sumhour'] = $r['sumhour'];
-			$rows[$index]['summoney'] = $r['summoney'];
+			$rows[$index]['cost'] = $r['cost'];
 			$rows[$index]['summenu'] = $r['summenu']; 
-			$rows[$index]['sumfinal'] = $r['sumfinal'];
 		}
 		
 		return $rows;

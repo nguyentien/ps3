@@ -71,14 +71,15 @@ if ($_POST['report']) {
 			
 			$index	= 5;
 			$stt	= 1;
+			Device::deleteSpamData();
 			$rows = Device::getDataReport(0, $date);
 			foreach ($rows as $r) {
 				$worksheet->write($index, 0, $stt, $row);
 				$worksheet->write($index, 1, $r['name'], $row);
-				$worksheet->write($index, 2, number_format($r['sumhour'], 2, ',', '.'), $row);
-				$worksheet->write($index, 3, number_format($r['summoney'], 2, ',', '.'), $row);
+				$worksheet->write($index, 2, number_format($r['sumhour']/3600, 2, ',', '.'), $row);
+				$worksheet->write($index, 3, number_format($r['sumhour']/3600*$r['cost'], 2, ',', '.'), $row);
 				$worksheet->write($index, 4, number_format($r['summenu'], 2, ',', '.'), $row);
-				$worksheet->write($index, 5, number_format($r['sumfinal'], 2, ',', '.'), $row);
+				$worksheet->write($index, 5, number_format($r['sumhour']/3600*$r['cost'] + $r['summenu'], 2, ',', '.'), $row);
 				$index++;
 				$stt++;
 			}
