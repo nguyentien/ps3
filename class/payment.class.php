@@ -301,20 +301,7 @@ class Payment {
 		$total1		= 0;
 		$total2		= 0;
 		$discount	= 0;
-		$unit		= 1;
-		
-		$result = $dbh->query("
-			SELECT 
-				val
-			FROM 
-				system
-			WHERE
-				var='default_unit'
-		");
-		foreach ($result as $r) {
-			$unit = (float) $r['val'];
-		}
-		$unit = $unit * 3600;
+		$unit		= self::getUnit();
 		
 		$result = $dbh->query("
 			SELECT 
@@ -345,5 +332,29 @@ class Payment {
 		}
 		
 		return array($total1 + $total2, $total1 + $total2 - $discount);
+	}
+	
+	/**
+	 * 
+	 * Get unit default
+	 */
+	public static function getUnit() {
+		$dbh = $GLOBALS['dbh'];
+		
+		$unit = 0;
+		$result = $dbh->query("
+			SELECT 
+				val
+			FROM 
+				system
+			WHERE
+				var='default_unit'
+		");
+		foreach ($result as $r) {
+			$unit = (float) $r['val'];
+		}
+		$unit = $unit * 60;
+		
+		return $unit;
 	}
 }

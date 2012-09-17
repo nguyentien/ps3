@@ -257,31 +257,81 @@ class Device {
 	
 	/**
 	 * 
+	 * Enter description here ...
+	 * @param int $id
+	 * @param int $date
+	 * @param int $date1
+	 */
+	public static function getDataForOneDevice($id, $date, $date1) {
+		$dbh = $GLOBALS['dbh'];
+		
+		$date_start	= strtotime(date('d', $date) . '-' . date('m', $date) . '-' . date('Y', $date) . ' 00:00:00');
+		$date_stop	= strtotime(date('d', $date) . '-' . date('m', $date) . '-' . date('Y', $date) . ' 23:59:59');
+		if ($date1) {
+			$date_stop	= strtotime(date('d', $date1) . '-' . date('m', $date1) . '-' . date('Y', $date1) . ' 23:59:59');
+		}
+		
+		$sql = "
+			SELECT
+				P.`start`,
+				P.`stop`,
+				D.cost,
+				P.`surcharge`,
+				P.`discount`,
+				SUM(PM.`number`*M.`cost`) AS summenu
+			FROM
+				`payment` P
+				INNER JOIN `device` D ON D.`id`=P.`device`
+				INNER JOIN `payment_menu` PM ON P.`id`=PM.`payment`
+				INNER JOIN `menu` M ON M.`id`=PM.`menu`
+			WHERE
+				P.`device`=$id
+				AND P.`date` BETWEEN $date_start AND $date_stop
+			GROUP BY
+				P.id
+		";
+		$rows = array();
+		foreach ($dbh->query($sql) as $r) {
+			$index = count($rows);
+			$rows[$index]['start'] = $r['start'];
+			$rows[$index]['stop'] = $r['stop'];
+			$rows[$index]['cost'] = $r['cost'];
+			$rows[$index]['surcharge'] = $r['surcharge'];
+			$rows[$index]['discount'] = $r['discount'];
+			$rows[$index]['summenu'] = $r['summenu'];
+		}
+		
+		return $rows;
+	}
+	/**
+	 * 
 	 * Get data for report
 	 * @param int $id
 	 * @param int $date
+	 * @param int $date1
 	 */
-	public static function getDataReport($id, $date) {
+	public static function getDataReportForAllDevice($date, $date1) {
 		$dbh = $GLOBALS['dbh'];
 		
-		if ($id) {
-			$where = ' AND D.id=' . $id;
-		} else {
-			$where = '1=1';
+		$date_start	= strtotime(date('d', $date) . '-' . date('m', $date) . '-' . date('Y', $date) . ' 00:00:00');
+		$date_stop	= strtotime(date('d', $date) . '-' . date('m', $date) . '-' . date('Y', $date) . ' 23:59:59');
+		if ($date1) {
+			$date_stop	= strtotime(date('d', $date1) . '-' . date('m', $date1) . '-' . date('Y', $date1) . ' 23:59:59');
 		}
+		
 		$sql = "
 			SELECT
 				D.name,
 				SUM(P.stop-P.start) AS sumhour,
 				D.cost,
+				SUM(P.surcharge) as sumsurcharge,
+				SUM(P.discount) as sumdiscount,
 				SUM(PM.number*M.cost) AS summenu
 			FROM
 				device D
-				LEFT JOIN payment P ON D.id=P.device
+				LEFT JOIN payment P ON D.id=P.device AND P.`date` BETWEEN $date_start AND $date_stop
 				LEFT JOIN payment_menu PM ON P.id=PM.payment
 				LEFT JOIN menu M ON M.id=PM.menu
-			WHERE
-				$where
 			GROUP BY
 				D.id
 		";
@@ -291,7 +341,9 @@ class Device {
 			$rows[$index]['name'] = $r['name'];
 			$rows[$index]['sumhour'] = $r['sumhour'];
 			$rows[$index]['cost'] = $r['cost'];
-			$rows[$index]['summenu'] = $r['summenu']; 
+			$rows[$index]['sumsurcharge'] = $r['sumsurcharge'];
+			$rows[$index]['sumdiscount'] = $r['sumdiscount'];
+			$rows[$index]['summenu'] = $r['summenu'];
 		}
 		
 		return $rows;

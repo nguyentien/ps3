@@ -8,7 +8,7 @@
 <tr>
 <tr>
 <td>Đơn vị tính tiền mặc định:</td>
-<td><input style="width: 100px" type="text" name="unit" id="unit" {if $default_unit} value="{$default_unit|number_format:0:",":","}" {/if}> giờ</td>
+<td><input style="width: 100px" type="text" name="unit" id="unit" {if $default_unit} value="{$default_unit|number_format:0:",":","}" {/if}> phút</td>
 </tr>
 <tr>
 <td colspan="2">
